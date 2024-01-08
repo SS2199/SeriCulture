@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Angular 
 
 on:
   push:
@@ -10,23 +10,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Use Node.js version 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
 
-      - name: Build Docker image
-        run: |
-          docker build -t cmtq/cloud:${{ github.run_number }} .
-        
-      - name: Push Docker image
-        run: |
-          docker login -u cmtq -p 90950047@
-          docker push cmtq/cloud:${{ github.run_number }}
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./SeriCulture
 
-      - name: Run Docker Container
-        run: |
-          docker run -d -p 4200:4200 cmtq/cloud:${{ github.run_number }}
+    - name: Build Angular App
+      run: npm run build
+      working-directory: ./SeriCulture
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker Image
+      run: |
+        docker build -t cmtq/cloud:${{ github.run_number }} -f ./SeriCulture/Dockerfile .
+
+    - name: Log in to Docker Hub
+      run: |
+        docker login -u cmtq -p 90950047@
+
+    - name: Push Docker Image
+      run: |
+        docker push cmtq/cloud:${{ github.run_number }}
+
+    - name: Run Docker Container
+      run: |
+        docker run -d -p 4200:4200 cmtq/cloud:${{ github.run_number }}
