@@ -16,7 +16,9 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd C:\Users\sindh\SeriCulture
+          npm install
 
       - name: Build Docker image
         run: |
