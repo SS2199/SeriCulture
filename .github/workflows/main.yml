@@ -20,9 +20,7 @@ jobs:
        node-version: 14
 
    - name: Install Dependencies
-     run: npm install
-     #working-directory: ./CeleSmart
-    
+     run: npm install --legacy-peer-deps
 
    - name: Build Ionic App
      run: npm run build 
