@@ -8,7 +8,7 @@ WORKDIR /src
 COPY ./package*.json./
 
 # Install app dependencies
-RUN npm install --legacy-peer-deps
+RUN npm install 
 
 # Install the Ionic CLI globally
 RUN npm install -g ionic
