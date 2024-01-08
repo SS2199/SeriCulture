@@ -5,7 +5,7 @@ FROM node:16 as build
 WORKDIR /src
 
 # Copy the package.json and package-lock.json from the Angular app directory to the container
-COPY ./package*.json 
+COPY ./package*.json./
 
 # Install app dependencies
 RUN npm install
