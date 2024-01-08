@@ -1,27 +1,30 @@
-name: Build and Deploy
+name: Build and Deploy Ionic App
+
 
 on:
-  push:
-    branches:
-      - main
+ push:
+   branches:
+     - main
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+ build-and-deploy:
+   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+   steps:
+   - name: Checkout repository
+     uses: actions/checkout@v2
 
-      - name: Build Docker image
-        run: |
-          docker build -t cmtq/cloud:${{ github.run_number }} .
-
-      - name: Push Docker image
-        run: |
-          docker login -u cmtq -p 90950047@
-          docker push cmtq/cloud:${{ github.run_number }}
-
-      - name: Run Docker Container
-        run: |
-          docker run -d -p 4200:4200 cmtq/cloud:${{ github.run_number }}
+   - name: Build Docker Image
+     run: |
+       docker build -t cmtq/cloud:${{ github.run_number }}  -f ./Dockerfile .
+       
+   - name: Log in to Docker Hub
+     run: |
+       docker login -u cmtq -p 90950047@
+   - name: Push Docker Image
+     run: |
+       docker push vipv/kuber:${{ github.run_number }}
+       
+   - name: Run Docker Container
+     run: |
+       docker run -d -p 4200:4200 cmtq/cloud:${{ github.run_number }}
