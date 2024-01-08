@@ -1,4 +1,4 @@
-# Use an official Node.js runtime as the base image for the build stage
+# Use an official Node.js runtime as the base image
 FROM node:16 as build
 
 # Set the working directory in the container
@@ -13,8 +13,11 @@ RUN npm install --legacy-peer-deps
 # Install the Ionic CLI globally
 RUN npm install -g ionic
 
+# Copy the remaining application code
+COPY . .
+
 # Build the Ionic app
- RUN ionic build
+RUN ionic build
 
 # Expose the port that the app will run on (if necessary)
 EXPOSE 4200
