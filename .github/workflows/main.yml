@@ -20,18 +20,18 @@ jobs:
 
     - name: Install Dependencies
       run: npm install
-      working-directory: ./SeriCulture
+      #working-directory: ./SeriCulture
 
     - name: Build Angular App
       run: npm run build
-      working-directory: ./SeriCulture
+      #working-directory: ./SeriCulture
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker Image
       run: |
-        docker build -t cmtq/cloud:${{ github.run_number }} -f ./SeriCulture/Dockerfile .
+        docker build -t cmtq/cloud:${{ github.run_number }} -f .
 
     - name: Log in to Docker Hub
       run: |
