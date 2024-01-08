@@ -13,20 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies and run Angular app
-        run: |
-          npm install
-          node --stack-size=16000 ./node_modules/@angular/cli/bin/ng serve
-
       - name: Build Docker image
         run: |
           docker build -t cmtq/cloud:${{ github.run_number }} .
-      
+
       - name: Push Docker image
         run: |
           docker login -u cmtq -p 90950047@

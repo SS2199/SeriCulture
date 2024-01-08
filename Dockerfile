@@ -2,7 +2,7 @@
 FROM node:14
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
@@ -14,8 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose port 4200
-#EXPOSE 4200
+EXPOSE 4200
 
-
-# Run Angular app with adjusted stack size
-CMD ["node", "--stack-size=16000", "node_modules/@angular/cli/bin/ng", "serve", "--host", "0.0.0.0"]
+# Run Angular app
+CMD ["node", "node_modules/@angular/cli/bin/ng", "serve", "--host", "0.0.0.0"]
