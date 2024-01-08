@@ -10,16 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Set up Node.js
-       uses: actions/setup-node@v2
-      with:
-       node-version: '12'
-
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Updated to Node.js version 16
 
       - name: Build Docker image
         run: |
           docker build -t cmtq/cloud:${{ github.run_number }} .
-
+        
       - name: Push Docker image
         run: |
           docker login -u cmtq -p 90950047@
