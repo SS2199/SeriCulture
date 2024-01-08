@@ -15,6 +15,9 @@ jobs:
         with:
           node-version: '16'  # Updated to Node.js version 16
 
+      - name: Install dependencies
+        run: npm install  # Install Node.js dependencies before building Docker image
+
       - name: Build Docker image
         run: |
           docker build -t cmtq/cloud:${{ github.run_number }} .
