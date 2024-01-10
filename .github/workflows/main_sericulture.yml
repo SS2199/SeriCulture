@@ -53,4 +53,4 @@ jobs:
           app-name: 'Sericulture'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7FB7678D12A24CC5912D752627483572 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EDE8526939AE43008D234FF0E226179F }}
