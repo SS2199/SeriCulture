@@ -19,13 +19,14 @@ jobs:
           node-version: '18.x'
 
       - name: Install Angular CLI
-        run: npm install -g @angular/cli
+        run: |
+           npm install -g @angular/cli
+           npm install
 
       - name: npm install, build, and test
         run: |
-          npm install
-          ng build --if-present
-          ng test --if-present
+           ng build --if-present
+           ng test --if-present
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
