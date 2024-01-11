@@ -24,7 +24,7 @@ jobs:
           npm install --legacy-peer-deps
 
       - name: Build Angular app
-        run: ng build --prod
+        run: ng build 
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
