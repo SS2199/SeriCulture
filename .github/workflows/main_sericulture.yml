@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x' 
+          node-version: '18.x'
 
       - name: Install Angular CLI and dependencies
         run: |
@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: angular-app
-          path: ./www
+          path: ./www  # Use the correct output path from angular.json
 
   deploy:
     runs-on: ubuntu-latest
@@ -43,11 +43,15 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: angular-app
+          path: ./www  # Use the correct output path from angular.json
+
+      - name: List files in the www directory
+        run: ls -R ./www
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'Sericulture'
           slot-name: 'Production'
-          package: ${{ github.workspace }}/www
+          package: ./www  # Use the correct output path from angular.json
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EDE8526939AE43008D234FF0E226179F }}
