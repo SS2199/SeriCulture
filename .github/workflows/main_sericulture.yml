@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'Sericulture'
           slot-name: 'Production'
-          package: ./www
+          package: ${{ github.workspace }}/www
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EDE8526939AE43008D234FF0E226179F }}
