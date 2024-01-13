@@ -19,8 +19,17 @@ COPY . .
 # Build the Ionic app
 RUN ionic build
 
-# Expose the port that the app will run on (if necessary)
-EXPOSE 4200
+# Stage 2: Use a smaller image for the runtime stage
+FROM node:14-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the built artifacts from the build stage to the runtime stage
+COPY --from=build /src/www /app
+
+# Expose the port that the app will run on
+EXPOSE 80
 
 # Use the CMD instruction to specify the command to run when starting the container
-CMD ["ionic", "serve", "--host=0.0.0.0", "--disable-host-check"]
+CMD ["ionic", "serve", "--host=0.0.0.0", "--disable-host-check", "--port=80"]
