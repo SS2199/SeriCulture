@@ -41,5 +41,5 @@ jobs:
           --resource-group Samsan-Work_group 
           --name Sericulture 
           --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} 
-          --ports 80 
-          --environment-variables "PORT=80"
+          --cpu 1 
+          --memory 1
