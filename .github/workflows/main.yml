@@ -41,8 +41,8 @@ jobs:
 
     - name: Deploy to Azure Container Instances
       run: |
-        az container create \
-          --resource-group Samsan-Work_group \
-          --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} \
-          --ports 80 \
+        az container create 
+          --resource-group Samsan-Work_group 
+          --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} 
+          --ports 80 
           --environment-variables "PORT=80"
