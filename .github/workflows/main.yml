@@ -28,7 +28,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker Image
-      run: docker build -t sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} .
+      run: docker build -t sericulture.azurecr.io/sindhusambasivam/hello_world:96 .
 
     - name: Log in to Azure Container Registry
       run: az acr login --name Sericulture -u Sericulture -p WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
@@ -37,4 +37,4 @@ jobs:
       run: az login
 
     - name: Deploy to Azure Container Instances
-      run: az container create --resource-group Samsan-Work_group --name Sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} --ports 80 --environment-variables "PORT=80" --registry-username Sericulture --registry-password WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
+      run: az container create --resource-group Samsan-Work_group --name sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:96 --ports 80 --environment-variables "PORT=80" --registry-username Sericulture --registry-password WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
