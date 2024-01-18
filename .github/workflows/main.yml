@@ -37,4 +37,4 @@ jobs:
       run: az login
 
     - name: Deploy to Azure Container Instances
-      run: az container create --resource-group Samsan-Work_group --name Sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} --ports 80 --environment-variables "PORT=80" --registry-username Sericulture
+      run: az container create --resource-group Samsan-Work_group --name Sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} --ports 80 --environment-variables "PORT=80" --registry-username Sericulture --registry-password WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
