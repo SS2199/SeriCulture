@@ -33,11 +33,11 @@ jobs:
     - name: Log in to Azure Container Registry
       run: az acr login --name Sericulture -u Sericulture -p WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
 
-    #- name: Azure Login
-      #run: az login
+    - name: Azure Login
+      run: az login
 
-    - name: Delete existing container group
-      run: az container delete --resource-group Samsan-Work_group --name sericulture --yes
+    #- name: Delete existing container group
+    #  run: az container delete --resource-group Samsan-Work_group --name sericulture --yes
 
     - name: Deploy to Azure Container Instances
       run: az container create --resource-group Samsan-Work_group --name sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:96 --ports 80 --environment-variables "PORT=80" --registry-username Sericulture --registry-password WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
