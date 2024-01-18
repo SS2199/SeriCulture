@@ -37,7 +37,7 @@ jobs:
       with:
           login-server: sericulture.azurecr.io
           username: Sericulture
-          password: WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
+          password: XktZIZXW3GXtD+PdCWHm4EA1Zzaqo3KUDHEe1NyeCs+ACRC8LXhR
       
     - name: Deploy to Azure Container Instances
       run: |
@@ -48,4 +48,4 @@ jobs:
           --ports 80 \
           --environment-variables "PORT=80" \
           --registry-username Sericulture \
-          --registry-password WKNXgv2/qR8pj/Meu8S4msggln80+SlTx9bQpJwjv/+ACRD2hoYn
+          --registry-password XktZIZXW3GXtD+PdCWHm4EA1Zzaqo3KUDHEe1NyeCs+ACRC8LXhR
