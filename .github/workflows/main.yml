@@ -46,6 +46,11 @@ jobs:
       run: |
        az login
 
+    - name: Delete existing Azure Container Group
+      run: |
+         az container delete --resource-group Samsan-Work_group --name sericulture --yes
+ 
+
     - name: Deploy to Azure Container Instances
       run: |
         az container create --resource-group Samsan-Work_group --name sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:96 --environment-variables "PORT=80" --registry-username Sericulture --registry-password XktZIZXW3GXtD+PdCWHm4EA1Zzaqo3KUDHEe1NyeCs+ACRC8LXhR
