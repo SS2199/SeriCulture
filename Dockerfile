@@ -26,7 +26,7 @@ FROM node:14-alpine
 WORKDIR /app
 
 # Copy the built artifacts from the build stage to the runtime stage
-COPY --from=build /src/www /app
+COPY --from=build /src/www /index.html
 
 # Expose the port that the app will run on
 EXPOSE 80
