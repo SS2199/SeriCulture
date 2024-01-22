@@ -30,33 +30,30 @@ jobs:
     - name: Build Docker Image
       run: |
         docker build -t sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} .
-       
+
     - name: Log in to Azure Container Registry
       uses: azure/docker-login@v1
       with:
-          login-server: sericulture.azurecr.io
-          username: Sericulture
-          password: XktZIZXW3GXtD+PdCWHm4EA1Zzaqo3KUDHEe1NyeCs+ACRC8LXhR
+        login-server: sericulture.azurecr.io
+        username: Sericulture
+        password: XktZIZXW3GXtD+PdCWHm4EA1Zzaqo3KUDHEe1NyeCs+ACRC8LXhR
 
     - name: Push Docker Image to Azure
       run: |
-       docker push sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }}
+        docker push sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }}
 
     - name: Azure Login
       run: |
-       az login
+        az login
+
+    - name: IP Address
+      run: |
+        az container show --resource-group Samsan-Work_group --name sericulture --query ipAddress.ip
 
     - name: Delete existing Azure Container Group
       run: |
-         az container delete --resource-group Samsan-Work_group --name sericulture --yes
- 
+        az container delete --resource-group Samsan-Work_group --name sericulture --yes
 
     - name: Deploy to Azure Container Instances
       run: |
         az container create --resource-group Samsan-Work_group --name sericulture --image sericulture.azurecr.io/sindhusambasivam/hello_world:${{ github.run_number }} --environment-variables "PORT=80" --registry-username Sericulture --registry-password XktZIZXW3GXtD+PdCWHm4EA1Zzaqo3KUDHEe1NyeCs+ACRC8LXhR
-          
-         
-         
-         
-          
-          
