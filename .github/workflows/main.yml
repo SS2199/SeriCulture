@@ -48,7 +48,7 @@ jobs:
 
     - name: IP Address
       run: |
-        az container show --resource-group Samsan-Work_group --name sericulture --query ipAddress.ip
+        az container show --resource-group Samsan-Work_group --name sericulture --query ipAddress.ip --output table
 
     - name: Delete existing Azure Container Group
       run: |
