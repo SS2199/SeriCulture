@@ -11,8 +11,7 @@
   <div *ngIf="dataLoaded" class="container">
     <div class="content">
       <label for="languageSelect" class="form-label">Select Language:</label>
-      <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="onSelectLanguage()"
-        class="form-select mb-3">
+      <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="onSelectLanguage()" class="form-select mb-3">
         <option value="english">English</option>
         <option value="tamil">Tamil</option>
         <!-- Add more language options if needed -->
@@ -71,6 +70,42 @@
                       <span>{{ item.detailAge }}</span>
                     </li>
                   </ul>
+                  <div class="day-section">
+                    <ion-item>
+                      <ion-label style="color:rgb(4, 88, 183);">Selecet a Day:</ion-label>
+                      <ion-select [(ngModel)]="selectedDay">
+                        <ion-select-option value="day1">Day 1</ion-select-option>
+                        <ion-select-option value="day2">Day 2</ion-select-option>
+                        <ion-select-option value="day3">Day 3</ion-select-option>
+                        <!-- Add more day options if needed -->
+                      </ion-select>
+                    </ion-item>
+                
+                    <div *ngIf="selectedDay === 'day1'">
+                      <!-- Content for Day 1 -->
+                      <ion-item>
+                        <ion-label>Content for Day 1:</ion-label>
+                        <ion-textarea auto-grow="true">{{ item.day1 }}</ion-textarea>
+                        <!-- You can access description data from the 'item' object -->
+                      </ion-item>
+                    </div>
+                    <div *ngIf="selectedDay === 'day2'">
+                      <!-- Content for Day 2 -->
+                      <ion-item>
+                        <ion-label>Content for Day 2:</ion-label>
+                        <ion-textarea auto-grow="false">{{ item.day2 }}</ion-textarea>
+                        <!-- You can access description data from the 'item' object -->
+                      </ion-item>
+                    </div>
+                    <div *ngIf="selectedDay === 'day3'">
+                      <!-- Content for Day 3 -->
+                      <ion-item>
+                        <ion-label>Content for Day 3:</ion-label>
+                        <ion-textarea auto-grow="false">{{ item.day3 }}</ion-textarea>
+                        <!-- You can access description data from the 'item' object -->
+                      </ion-item>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -84,4 +119,3 @@
     <p>Loading...</p>
   </div>
 </ion-content>
-

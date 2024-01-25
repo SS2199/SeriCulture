@@ -25,7 +25,9 @@ export class MoultPage implements OnInit {
   retrievedData: any[] = [];
   selectedLanguage: string = 'english'; // Default language
   dataLoaded: boolean = false;
-
+  storedDate: any;
+  selectedDay: any;
+  
   
   // English labels
   englishLabels = {
@@ -52,8 +54,7 @@ export class MoultPage implements OnInit {
     detailAge: 'விவரம்/வயது',
     feedDays: 'உணவு அளிக்கும் நாட்கள்',
   };
-  storedDate: any;
-
+ 
 
   constructor(private dateService: DateService) {}
 

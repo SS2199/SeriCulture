@@ -1,145 +1,3 @@
-/*import { Component, OnInit } from '@angular/core';
-import { PriceService } from '../../services/price.service';
-import { DateService } from '../../services/date.service';
-import Chart from 'chart.js/auto';
-
-@Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
-})
-export class Tab3Page implements OnInit {
-  prices: any;
-  displayedPrices: any;
-  allPrices: any;
-  breeds: string[] = [];
-  locations: string[] = [];
-  selectedBreed: string = 'All';
-  selectedLocation: string = '';
-  selectedDate: string = ''; // Add a variable to hold selected date
-
-  constructor(private priceService: PriceService, private dateService: DateService) { }
-
-  ngOnInit() {
-    this.priceService.getPrices().subscribe((price: any) => {
-      this.prices = price;
-      this.allPrices = price;
-      this.displayedPrices = this.prices.slice(0, 10);
-      this.breeds = this.getUniqueValues('Breed');
-      this.locations = this.getUniqueValues('Location');
-
-      this.createChart();
-    });
-
-    // Load selected locations from MongoDB
-    this.loadSelectedLocation();
-  }
-
-  saveSelectedLocation() {
-    const selectedLocation = [this.selectedLocation]; // Convert the string to an array
-    this.dateService.saveSelectedLocations(selectedLocation).subscribe(
-      (response) => {
-        console.log('Selected location saved successfully:', response);
-        // Handle successful response here
-      },
-      (error) => {
-        console.error('Error saving selected location:', error);
-        // Handle error scenario
-      }
-    );
-  }
-  
-  
-  // Function to load selected location from localStorage
-  loadSelectedLocation() {
-    const savedLocation = localStorage.getItem('selectedLocation');
-    if (savedLocation) {
-      this.selectedLocation = savedLocation;
-      this.filterData(); // Apply the filter if the location is loaded
-      console.log('Selected location loaded:', this.selectedLocation);
-    }
-  }
-
-  // Function to get unique values
-  getUniqueValues(key: string): string[] {
-    const uniqueValues: string[] = [];
-    if (this.prices) {
-      this.prices.forEach((price: any) => {
-        if (!uniqueValues.includes(price[key])) {
-          uniqueValues.push(price[key]);
-        }
-      });
-    }
-    return uniqueValues;
-  }
-
-  filterData() {
-    if (this.allPrices) {
-      this.displayedPrices = this.allPrices.filter((price: any) => {
-        const matchBreed = this.selectedBreed === 'All' || price.Breed === this.selectedBreed;
-        const matchLocation = this.selectedLocation === 'All' || price.Location === this.selectedLocation;
-        const matchDate = this.selectedDate === '' || price.Date === this.selectedDate;
-  
-        return matchBreed && matchLocation && matchDate;
-      });
-  
-      this.createChart(); // Update the chart after filtering data
-    } else {
-      console.error('this.allPrices is undefined or null.');
-      // Handle the case where this.allPrices is undefined or null
-      // You might want to load data or take appropriate actions here.
-    }
-  }
-  
-
-  // Function to create the chart
-  createChart() {
-    const ctx = document.getElementById('priceChart') as HTMLCanvasElement;
-
-    const breedLabels = this.displayedPrices.map((price: any) => `${price.Breed} - ${price.Location}`);
-    const minPrices = this.displayedPrices.map((price: any) => parseFloat(price.Min_Price.replace('₹', '')));
-    const maxPrices = this.displayedPrices.map((price: any) => parseFloat(price.Max_Price.replace('₹', '')));
-    const avgPrices = this.displayedPrices.map((price: any) => parseFloat(price.Avg_Price.replace('₹', '')));
-
-    const chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: breedLabels,
-        datasets: [
-          {
-            label: 'Min Price',
-            data: minPrices,
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-          },
-          {
-            label: 'Max Price',
-            data: maxPrices,
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-          },
-          {
-            label: 'Avg Price',
-            data: avgPrices,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            stacked: true,
-          },
-          y: {
-            stacked: true,
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  }
-}*/
-
 import { Component, OnInit } from '@angular/core';
 import { PriceService } from '../../services/price.service';
 import { DateService } from '../../services/date.service';
@@ -182,6 +40,7 @@ export class Tab3Page implements OnInit {
         this.allPrices = price;
         this.displayedPrices = this.prices.slice(0, 10);
         this.breeds = this.getUniqueValues('Breed');
+        this.breeds.unshift('All');
         this.locations = this.getUniqueValues('Location');
         this.createChart();
       },
@@ -242,18 +101,22 @@ export class Tab3Page implements OnInit {
     return uniqueValues;
   }
   
-  
-
   filterData() {
     if (this.allPrices) {
-      this.displayedPrices = this.allPrices.filter((price: Price) => {
-        const matchBreed = this.selectedBreed === 'All' || price.Breed === this.selectedBreed;
-        const matchLocation = this.selectedLocation === 'All' || price.Location === this.selectedLocation;
-        const matchDate = this.selectedDate === '' || price.Date === this.selectedDate;
-  
-        return matchBreed && matchLocation && matchDate;
-      });
-  
+      if (this.selectedBreed === 'All') {
+        // If 'All' is selected, display all data
+        this.displayedPrices = this.allPrices;
+      } else {
+        // Filter data based on selected breed, location, and date
+        this.displayedPrices = this.allPrices.filter((price: Price) => {
+          const matchBreed = this.selectedBreed === 'All' || price.Breed === this.selectedBreed;
+          const matchLocation = this.selectedLocation === 'All' || price.Location === this.selectedLocation;
+          const matchDate = this.selectedDate === '' || price.Date === this.selectedDate;
+
+          return matchBreed && matchLocation && matchDate;
+        });
+      }
+
       this.createChart();
     } else {
       console.error('this.allPrices is undefined or null.');
