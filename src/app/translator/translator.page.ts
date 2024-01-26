@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DateService } from '../../services/date.service';
 
 interface StageDetails {
+  count: number;
+  calculatedEndBedSize: any;
+  calculatedStartBedSize: any;
   Stage: string;
   feedDays: string;
   disinfectant: string;
@@ -27,7 +30,7 @@ export class TranslatorPage implements OnInit {
   selectedStage: string = '';
   selectedDate: string = '';
   stages: StageDetails[] = [];
-  
+  count: number = 0;
 
 // English labels
   englishLabels = {
@@ -52,6 +55,7 @@ export class TranslatorPage implements OnInit {
     feedDays: 'உணவு அளிக்கும் நாட்கள்',
     selection: 'நாள் தேர்வு',
   };
+
 
 
   constructor(private dateService: DateService) { }
@@ -91,6 +95,33 @@ export class TranslatorPage implements OnInit {
   getLabels(): any {
     return this.selectedLanguage === 'tamil' ? this.tamilLabels : this.englishLabels;
   }
+
+ // Initialize count in your class
+
+
+onCountChange(): void {
+  // Loop through all retrievedData items and update calculated values
+  for (let item of this.retrievedData) {
+    const count = Number(this.count);
+
+    if (!isNaN(count)) {
+      const startBedSize = parseInt(item.startBedSize, 10);
+      const endBedSize = parseInt(item.endBedSize, 10);
+
+      // Calculate start and end bed sizes based on the count
+      const calculatedStartBedSize = startBedSize + count;
+      const calculatedEndBedSize = endBedSize + count;
+
+      // Update the item with calculated values
+      item.calculatedStartBedSize = calculatedStartBedSize.toString();
+      item.calculatedEndBedSize = calculatedEndBedSize.toString();
+    } else {
+      // Handle invalid input (non-numeric count)
+      // You may want to display an error message or handle it as needed
+    }
+  }
+}
+
   
   calculateDates(): void {
     const stageData = this.stages.find((stage) => stage.feedDays === this.selectedStage);

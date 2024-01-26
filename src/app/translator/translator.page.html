@@ -21,59 +21,60 @@
     <ion-label>Select Date</ion-label>
     <input type="date" [(ngModel)]="selectedDate" (change)="calculateDates()" class="form-control">
   </ion-item>
-
- 
+<ion-card>
+  <ion-item class="content-section">
+    <ion-label style="color:rgb(4, 88, 183);">Number of Insect</ion-label>
+    <ion-input type="number" [(ngModel)]="count" placeholder="Enter Number of Insects"></ion-input>
+    <ion-button (click)="onCountChange()">OK</ion-button>
+  </ion-item>
+</ion-card>
   <div *ngIf="dataLoaded" class="content-section">
     <ion-list>
       <ion-card *ngFor="let item of retrievedData">
         <ion-item>
           <ion-label>
             <h2>{{ item.Stage }}</h2>
-            <p>{{ getLabels().stages }} : {{ item.Stage }}</p>
-            <p>{{ getLabels().startBedSize }}: {{ item.startBedSize }}</p>
+            <p>{{ getLabels().stages }}: {{ item.Stage }}</p>
+            <p>{{ getLabels().startBedSize }}: {{ item.calculatedStartBedSize }}SqFt</p>
             <p>{{ getLabels().disinfectant }}: {{ item.disinfectant }}</p>
-            <p>{{ getLabels().endBedSize }}: {{ item.endBedSize }}</p>
+            <p>{{ getLabels().endBedSize }}: {{ item.calculatedEndBedSize }}SqFt</p>
             <p>{{ getLabels().detailAge }}: {{ item.detailAge }}</p>
             <p>{{ getLabels().feedDays }}: {{ item.feedDays }}</p>
           </ion-label>
         </ion-item>
-      <div class="day-section">
-        <ion-item >
-          <ion-label style="color:rgb(4, 88, 183);">{{getLabels().selection}}:</ion-label>
-          <ion-select [(ngModel)]="selectedDay">
-            <ion-select-option value="day1">Day 1</ion-select-option>
-            <ion-select-option value="day2">Day 2</ion-select-option>
-            <ion-select-option value="day3">Day 3</ion-select-option>
-            <!-- Add more day options if needed -->
-          </ion-select>
-        </ion-item>
 
-        <div *ngIf="selectedDay === 'day1'" >
-          <!-- Content for Day 1 -->
+        <div class="day-section">
           <ion-item>
-            <ion-label >Content for Day 1:</ion-label>
-            <ion-textarea auto-grow="true">{{ item.day1 }}</ion-textarea>
-            <!-- You can access description data from the 'item' object -->
+            <ion-label style="color:rgb(4, 88, 183);">{{ getLabels().selection }}:</ion-label>
+            <ion-select [(ngModel)]="selectedDay">
+              <ion-select-option value="day1">Day 1</ion-select-option>
+              <ion-select-option value="day2">Day 2</ion-select-option>
+              <ion-select-option value="day3">Day 3</ion-select-option>
+              <!-- Add more day options if needed -->
+            </ion-select>
           </ion-item>
+
+          <div *ngIf="selectedDay === 'day1'" class="day-content">
+            <ion-item>
+              <ion-label>Content for Day 1:</ion-label>
+              <ion-textarea auto-grow="true">{{ item.day1 }}</ion-textarea>
+            </ion-item>
+          </div>
+
+          <div *ngIf="selectedDay === 'day2'" class="day-content">
+            <ion-item>
+              <ion-label>Content for Day 2:</ion-label>
+              <ion-textarea auto-grow="false">{{ item.day2 }}</ion-textarea>
+            </ion-item>
+          </div>
+
+          <div *ngIf="selectedDay === 'day3'" class="day-content">
+            <ion-item>
+              <ion-label>Content for Day 3:</ion-label>
+              <ion-textarea auto-grow="false">{{ item.day3 }}</ion-textarea>
+            </ion-item>
+          </div>
         </div>
-        <div *ngIf="selectedDay === 'day2'">
-          <!-- Content for Day 2 -->
-          <ion-item>
-            <ion-label>Content for Day 2:</ion-label>
-            <ion-textarea auto-grow="false">{{ item.day2 }}</ion-textarea>
-            <!-- You can access description data from the 'item' object -->
-          </ion-item>
-        </div>
-        <!-- Add more content and conditions for each day -->
-        <div *ngIf="selectedDay === 'day3'">
-          <!-- Content for Day 3 -->
-          <ion-item>
-            <ion-label>Content for Day 3:</ion-label>
-            <ion-textarea auto-grow="false">{{ item.day3 }}</ion-textarea>
-            <!-- You can access description data from the 'item' object -->
-          </ion-item>
-        </div>
-      </div>
       </ion-card>
     </ion-list>
   </div>
