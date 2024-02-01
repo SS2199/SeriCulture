@@ -21,19 +21,27 @@
     <ion-label>Select Date</ion-label>
     <input type="date" [(ngModel)]="selectedDate" (change)="calculateDates()" class="form-control">
   </ion-item>
-<ion-card>
-  <ion-item class="content-section">
-    <ion-label style="color:rgb(4, 88, 183);">Number of Insect</ion-label>
-    <ion-input type="number" [(ngModel)]="count" placeholder="Enter Number of Insects"></ion-input>
-    <ion-button (click)="onCountChange()">OK</ion-button>
-  </ion-item>
-</ion-card>
-  <div *ngIf="dataLoaded" class="content-section">
-    <ion-list>
-      <ion-card *ngFor="let item of retrievedData">
+
+  <ion-card>
+    <ion-item class="content-section">
+      <ion-label style="color:rgb(4, 88, 183);">Number of Insect</ion-label>
+      <ion-input type="number" [(ngModel)]="count" placeholder="Enter Number of Insects"></ion-input>
+      <ion-button (click)="onCountChange()">OK</ion-button>
+    </ion-item>
+  </ion-card>
+  
+  <ion-list *ngIf="dataLoaded" class="content-section">
+    <ion-card *ngFor="let item of retrievedData" draggable="true" (dragstart)="onDragStart($event)">
+      <ion-item (click)="toggleStage(item)">
+        <ion-label>
+          <h2>{{ item.Stage }}</h2>
+        </ion-label>
+        <ion-icon class="float-end" name="{{item.isExpanded ? 'remove' : 'add'}}-circle"></ion-icon>
+      </ion-item>
+
+      <div *ngIf="item.isExpanded">
         <ion-item>
           <ion-label>
-            <h2>{{ item.Stage }}</h2>
             <p>{{ getLabels().stages }}: {{ item.Stage }}</p>
             <p>{{ getLabels().startBedSize }}: {{ item.calculatedStartBedSize }}SqFt</p>
             <p>{{ getLabels().disinfectant }}: {{ item.disinfectant }}</p>
@@ -42,7 +50,6 @@
             <p>{{ getLabels().feedDays }}: {{ item.feedDays }}</p>
           </ion-label>
         </ion-item>
-
         <div class="day-section">
           <ion-item>
             <ion-label style="color:rgb(4, 88, 183);">{{ getLabels().selection }}:</ion-label>
@@ -75,11 +82,12 @@
             </ion-item>
           </div>
         </div>
-      </ion-card>
-    </ion-list>
-  </div>
+      </div>
+    </ion-card>
+  </ion-list>
 
-  <div *ngIf="!dataLoaded">
-    <p>Loading...</p>
-  </div>
+
+<div *ngIf="!dataLoaded">
+  <p>Loading...</p>
+</div>
 </ion-content>

@@ -122,6 +122,15 @@ onCountChange(): void {
   }
 }
 
+onDragStart(event: DragEvent) {
+  // Implement your drag start logic here
+  console.log('Drag started');
+}
+
+toggleStage(item: any) {
+  // Implement your toggle stage logic here
+  item.isExpanded = !item.isExpanded;
+}
   
   calculateDates(): void {
     const stageData = this.stages.find((stage) => stage.feedDays === this.selectedStage);
