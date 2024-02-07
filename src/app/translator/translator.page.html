@@ -31,7 +31,8 @@
   </ion-card>
   
   <ion-list *ngIf="dataLoaded" class="content-section">
-    <ion-card *ngFor="let item of retrievedData" draggable="true" (dragstart)="onDragStart($event)">
+    <ng-container *ngFor="let item of retrievedData">
+      <ion-card [ngClass]="{'tracked': item.isTracked}" *ngIf="item.isVisible" draggable="true" (dragstart)="onDragStart($event)">
       <ion-item (click)="toggleStage(item)">
         <ion-label>
           <h2>{{ item.Stage }}</h2>
@@ -84,6 +85,7 @@
         </div>
       </div>
     </ion-card>
+  </ng-container>
   </ion-list>
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DateService } from '../../services/date.service';
 
 interface StageDetails {
+  isTracked: boolean;
   count: number;
   calculatedEndBedSize: any;
   calculatedStartBedSize: any;
@@ -55,7 +56,7 @@ export class TranslatorPage implements OnInit {
     feedDays: 'உணவு அளிக்கும் நாட்கள்',
     selection: 'நாள் தேர்வு',
   };
-
+item: any;
 
 
   constructor(private dateService: DateService) { }
@@ -96,9 +97,7 @@ export class TranslatorPage implements OnInit {
     return this.selectedLanguage === 'tamil' ? this.tamilLabels : this.englishLabels;
   }
 
- // Initialize count in your class
-
-
+ 
 onCountChange(): void {
   // Loop through all retrievedData items and update calculated values
   for (let item of this.retrievedData) {
@@ -120,7 +119,9 @@ onCountChange(): void {
       // You may want to display an error message or handle it as needed
     }
   }
+  
 }
+
 
 onDragStart(event: DragEvent) {
   // Implement your drag start logic here
@@ -131,40 +132,53 @@ toggleStage(item: any) {
   // Implement your toggle stage logic here
   item.isExpanded = !item.isExpanded;
 }
-  
-  calculateDates(): void {
-    const stageData = this.stages.find((stage) => stage.feedDays === this.selectedStage);
-    if (stageData && this.selectedDate) {
-      const feedDays = parseInt(stageData.feedDays, 10);
-  
-      const startDate = new Date(this.selectedDate);
-      const endDate = new Date(startDate.getTime() + feedDays * 24 * 60 * 60 * 1000);
-  
-      const formattedStartDate = startDate.toISOString().split('T')[0];
-      const formattedEndDate = endDate.toISOString().split('T')[0];
-  
-      stageData.startDate = formattedStartDate;
-      stageData.endDate = formattedEndDate;
-  
-      // Update the UI for the selected stage
-      this.retrievedData = this.retrievedData.map((item) => {
-        if (item.feedDays === this.selectedStage) {
-          item.startDate = formattedStartDate;
-          item.endDate = formattedEndDate;
-        }
-        return item;
-      });
-  
-      // Save the selected start date
-      this.dateService.saveSelectedDate(formattedStartDate).subscribe(
-        (response) => {
-          console.log('Date saved successfully:', response);
-        },
-        (error) => {
-          console.error('Error saving date:', error);
-        }
-      );
+
+calculateTrackedStatus(): void {
+  const selectedDate = new Date(this.selectedDate);
+
+  let isFirstStage = true;
+
+  this.retrievedData.forEach((stage, index) => {
+    const startDate = new Date(stage.startDate);
+    const endDate = new Date(stage.endDate);
+
+    stage.isTracked = selectedDate >= startDate && selectedDate <= endDate;
+
+    if (isFirstStage && stage.isTracked) {
+      stage.isVisible = true;
+      isFirstStage = false;
+    } else {
+      stage.isVisible = false;
     }
-  }
- 
+
+    if (!isFirstStage && index > 1 && this.retrievedData[index - 1].isTracked) {
+      stage.isVisible = stage.isTracked;
+    }
+  });
+}
+
+
+  
+calculateDates(): void {
+  const selectedDate = new Date(this.selectedDate);
+
+  this.retrievedData.forEach((stage) => {
+    const startDate = new Date(stage.startDate);
+    const endDate = new Date(stage.endDate);
+
+    stage.isVisible = selectedDate >= startDate && selectedDate <= endDate;
+  });
+
+  // Save the selected start date
+  this.dateService.saveSelectedDate(selectedDate.toISOString().split('T')[0]).subscribe(
+    (response) => {
+      console.log('Date saved successfully:', response);
+    },
+    (error) => {
+      console.error('Error saving date:', error);
+    }
+  );
+}
+
+
 }
