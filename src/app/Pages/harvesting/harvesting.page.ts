@@ -9,6 +9,7 @@ import { TranslationService } from '../../../services/translation.service';
 export class HarvestingPage {
   selectedLanguage: string = 'en'; // Default language
   translatedText: string = '';
+translatedParagraph: any;
 
   constructor(private translationService: TranslationService) { }
 
