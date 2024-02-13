@@ -12,7 +12,7 @@
     </ion-toolbar>
     
   </ion-header>
-  <img src="/assets/மல்பெரிஅறுவடை.jpeg"/>
+  <!--img src="/assets/மல்பெரிஅறுவடை.jpeg"/>
   <p style="text-align: center;">மல்பெரி அறுவடை</p>
   <ion-content>
 
@@ -89,6 +89,35 @@
     <li>ஒவ்வொரு முறை பட்டுப்புழு வளர்க்கும் போதும், சீரமைப்பு இருக்கும். எனவே, மீண்டும் நடவு செய்வதற்கான பொருட்கள் கிடைக்காது.</li>
     <li>சில நிபுணர்களின் கூற்றுப்படி, நோய் ஏற்படும் போது, ​​நோயுற்ற புழுக்களை அகற்றுவது கடினமாக இருக்கும்.</li>
   </ol>
-</details>
+</details-->
 
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ionic Translator</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Choose Language:</ion-label>
+      <ion-select [(ngModel)]="selectedLanguage" (ionChange)="changeLanguage()">
+        <ion-select-option value="en">English</ion-select-option>
+        <ion-select-option value="ta">Tamil</ion-select-option>
+        <!-- Add more options for other languages as needed -->
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="translatedParagraph">
+    <ion-card>
+      <ion-card-header>Translated Paragraph</ion-card-header>
+      <ion-card-content>{{ translatedParagraph }}</ion-card-content>
+    </ion-card>
+  </div>
+
+  <div>
+    <!-- Hardcoded paragraph to be translated -->
+    <p>This is a hardcoded paragraph.</p>
+  </div>
+</ion-content>
